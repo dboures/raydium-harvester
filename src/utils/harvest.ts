@@ -9,12 +9,10 @@ export default async function harvest (conn: Connection, wallet: any) {
         return;
     }
 
-    //TODO: turn into multiple find, taking in farms as a function input
+    //TODO: should be a way to get farms for api
     let farmInfo = FARMS.find(farm => {
-        return farm.name == 'RAY-SRM'
+        return farm.poolId == 'HwEgvS79S53yzYUTRHShU6EuNmhR3WTX5tTZPUzBmwky' // TODO: automate
     });
-
-    console.log(farmInfo);
 
     let programId = farmInfo?.programId
     if (typeof programId === 'undefined'){
@@ -25,15 +23,14 @@ export default async function harvest (conn: Connection, wallet: any) {
         return
     }
 
-    console.log(mintAddress);
-    console.log('DSX5E21RE9FB9hM8Nh8xcXQfPK6SzRaJiywemHBSsfup'); // how to get this
 
     let tokenAccountsFilter: TokenAccountsFilter = {
         programId: new PublicKey(programId),
-        mint: new PublicKey('DSX5E21RE9FB9hM8Nh8xcXQfPK6SzRaJiywemHBSsfup')
+        mint: new PublicKey('DSX5E21RE9FB9hM8Nh8xcXQfPK6SzRaJiywemHBSsfup') // TODO: automate
+
     }
 
-    let res1 = await conn.getTokenAccountsByOwner(wallet._publicKey, tokenAccountsFilter  );
+    let res1 = await conn.getTokenAccountsByOwner(wallet._publicKey, tokenAccountsFilter);
 
     // const lpAccount = get(this.wallet.tokenAccounts, `${this.farmInfo.lp.mintAddress}.tokenAccountAddress`)
     //   const rewardAccount = get(this.wallet.tokenAccounts, `${this.farmInfo.reward.mintAddress}.tokenAccountAddress`)
@@ -44,12 +41,20 @@ export default async function harvest (conn: Connection, wallet: any) {
     await deposit(conn,
         wallet,
         farmInfo,
-        '5v5afm5CNkuBffoaq4TrPkmn5pRUd6r4uEaD4kTN1X4f',//lp Account
+        '5v5afm5CNkuBffoaq4TrPkmn5pRUd6r4uEaD4kTN1X4f',// my lp Account address
         'DgHYWZmBUijAUnTxpvjUw4ryGfWPtWJaDixCfTc4iVBt', // rewardAccount
         'FWHirYo85tdmJxPwrhQX9ZSrqgsTq4m9rJVuEdgcteXf', //InfoAccount
         '0')
 
-    console.log('done');
+        //trade ray for SRM
+
+        
+
+
+
+
+        // stake ray
+        
 
 
 }

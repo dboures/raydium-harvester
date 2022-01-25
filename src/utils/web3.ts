@@ -364,7 +364,7 @@ export async function sendTransaction(
   transaction: Transaction,
   signers: Array<Account> = []
 ) {
-  const signedTransaction = await signTransaction(connection, wallet, transaction, signers)
+  const signedTransaction = await signTransaction(connection, wallet, transaction, signers);
   console.log('signed');
   return await sendSignedTransaction(connection, signedTransaction)
 }
